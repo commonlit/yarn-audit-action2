@@ -9,6 +9,8 @@ LABEL "com.github.actions.description"="Run yarn audit with ignore"
 LABEL "com.github.actions.icon"="terminal"
 LABEL "com.github.actions.color"="purple"
 
+RUN apk add --no-cache jq
+
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

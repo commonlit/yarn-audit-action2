@@ -22,7 +22,7 @@ if [ -f .yarn-audit-known-issues ] && echo "$output" | grep auditAdvisory | diff
 fi
 
 echo
-echo Security vulnerabilities were found that were not ignored
+echo Security vulnerabilities were found that were not ignored.
 echo
 echo Check to see if these vulnerabilities apply to production
 echo and/or if they have fixes available. If they do not have
@@ -32,8 +32,10 @@ echo To ignore these vulnerabilities, run:
 echo
 echo "yarn audit --json | grep auditAdvisory > .yarn-audit-known-issues"
 echo
-echo and commit the yarn-audit-known-issues file
+echo and commit the yarn-audit-known-issues file.
 echo
-echo "$output" | grep auditAdvisory | python -mjson.tool
+echo Advisories found:
+echo
+echo "$output" | grep auditAdvisory | jq '{  affects: .data.resolution.path, recommendation: .data.advisory.recommendation, url: .data.advisory.url }'
 
 exit "$result"
