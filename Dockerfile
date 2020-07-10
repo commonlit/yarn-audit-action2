@@ -10,7 +10,8 @@ LABEL "com.github.actions.icon"="terminal"
 LABEL "com.github.actions.color"="purple"
 
 RUN apk add --no-cache jq \
-		       bash
+		       bash \
+		       yarn
 
 COPY entrypoint.sh /entrypoint.sh
 
