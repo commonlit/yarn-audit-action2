@@ -1,0 +1,10 @@
+name: 'Yarn Audit Action'
+description: 'Runs yarn audit with ignore via GitHub Actions.'
+author: 'Jamie McDonald <jamie@qwyck.net>'
+branding:
+  icon: 'terminal'
+  color: 'purple'
+runs:
+  using: 'docker'
+  image: './Dockerfile'
+
