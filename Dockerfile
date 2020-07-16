@@ -15,4 +15,6 @@ RUN apk add --no-cache jq \
 
 COPY entrypoint.sh /entrypoint.sh
 
+ENV NODE_OPTIONS="--max_old_space_size=4096"
+
 ENTRYPOINT ["/entrypoint.sh"]
