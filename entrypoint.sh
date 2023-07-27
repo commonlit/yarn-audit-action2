@@ -6,7 +6,7 @@
 set -u
 
 set +e
-output=$(yarn audit --json)
+output=$(yarn audit --json --groups dependencies)
 result=$?
 set -e
 
