@@ -15,7 +15,10 @@ if [ $result -eq 0 ]; then
   exit 0
 fi
 
-if [ -f .yarn-audit-known-issues ] && echo "$output" | grep auditAdvisory | diff -q .yarn-audit-known-issues - > /dev/null 2>&1; then
+# Process the relevant JSONLines rows through jq to get them into an array
+# then sort them, then output them again as JSONLines. This processing prevents
+# unstable sorting of yarn-audit advisories from causing sorting-only diffs
+if [ -f .yarn-audit-known-issues ] && echo "$output" | grep auditAdvisory | jq -cs '. | sort_by(.data.resolution.id)' | jq -c '.[]' | diff -q .yarn-audit-known-issues - > /dev/null 2>&1; then
   echo
   echo Ignorning known vulnerabilities
   exit 0
@@ -30,7 +33,7 @@ echo fixes and they do not apply to production, you may ignore them.
 echo
 echo To ignore these vulnerabilities, run:
 echo
-echo "yarn audit --json --groups dependencies | grep auditAdvisory > .yarn-audit-known-issues"
+echo "yarn audit --json --groups dependencies | grep auditAdvisory |  jq -cs '. | sort_by(.data.resolution.id)' | jq -c '.[]' > .yarn-audit-known-issues"
 echo
 echo and commit the yarn-audit-known-issues file.
 echo
